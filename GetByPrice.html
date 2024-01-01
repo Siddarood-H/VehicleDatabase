@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Details By Price</title>
+    <style>
+        /* body{
+            background-color: rgb(112, 111, 111);
+        } */
+        body{
+            /* background-color: rgb(112, 111, 111); */
+            background-image: url("./CarHomePage.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: left;
+        }
+        .main{
+            background-color: rgba(145, 193, 241, 0.612);
+            width: 80vw;
+            margin: 0px auto;
+            padding-top: 15px;
+            border-radius: 10px;
+        }
+        h1{
+            margin: auto auto; /* font-family: sans-serif; *//* background-color: aqua; */
+        }
+        h3{
+            padding-top: 5px;
+            margin: 10px 15px;
+        }
+        #btn1{
+            height: 30px;
+            border: 1.3px solid white;
+            border-radius: 5px;
+            color: white;
+            background-color: rgb(170, 62, 62);
+            margin: 30px 0px 20px 20px;
+        }
+        #btn1:hover{
+            color: red;
+            border: 1.3px solid red;
+            background-color: white;
+            transition: 1s;
+        }
+        #page>form{
+            text-align: center;
+        }
+        #input{
+            height: 30px;
+            width: 200px;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+            outline: none;
+        }
+        #btn2{
+            margin: 10px;
+            height: 35px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            background-color: green;
+        }
+        #btn2:hover{
+            color: green;
+            background-color: white;
+            border: 1.4px solid green;
+            transition: 1s;
+        }
+        .nav{
+            background-color: rgb(43, 19, 64);
+            height: 80px;
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+            display: flex;
+        }
+        .nav-bar{
+            position: fixed;
+            top: 0px;
+            height: 69px;
+            width: 80.05vw;
+            margin: 0px;
+            background-color: gray;
+        }
+        p{
+            text-align: center;
+            color: white;
+            background-color: rgb(66, 58, 58);
+            height: 65px;
+            margin: 0px;
+            padding: 20px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        #details {
+            height: 210px;
+            width: 410px;
+            margin: 5px 30px;
+            margin-left: 40px;
+            border-radius: 8px;
+            /* background-color: rgb(251, 154, 137); */
+            background-color: rgb(255, 255, 255);
+            display: inline-block;
+        }
+        #details li {
+            margin: 4px;
+        }
+        #details span {
+            color: blue;
+        }
+        .dts{
+            display: flex;
+            justify-content: space-between;
+            /* background-color: brown; */
+        }
+        .dt2 img{
+            height: 138px;
+            width: 230px;
+            margin: 0px;
+            margin-right: 10px;
+            border-radius: 5px;
+            /* background-color: aqua; */
+        }
+        h2{
+            color: blue;
+            font-family: sans-serif;
+        }
+        span{
+            color: red;
+        }
+    </style>
+</head>
+<body > 
+    
+    <div class="main">
+        <div id="page">
+            <div class="nav-bar">
+                <div class="nav">
+                    <form action="./MainVehicle.html">
+                        <button id="btn1">Go Back</button>
+                    </form>
+                    <h1 style="text-align: center; color: white;">Find Details By Price</h1> 
+                </div>
+            </div> <br> 
+            <hr> <br>
+    
+            <h2 style="text-align: center; ">Enter Details</h2> <hr>
+            <form action="">
+                <input type="text" id="input" placeholder="Enter Preffered Price" required><span>*</span> <br>
+                <label for="min">
+                    <input value="Less-Than" type="radio" name="type" id="min"> Less Than
+                </label>
+                <label for="max">
+                    <input value="Greater-Than" type="radio" name="type" id="max"> Greater Than
+                </label>
+                <br>
+                <button id="btn2" onclick="save()">Get Details</button>
+            </form> <hr>
+    
+            
+        </div>
+        <div id="hd4"></div>
+        <hr><p>Vehicle DataBase <br> This website is designed with Kotresh <br>
+            © 2023 - 2023 kotresh.com, Inc</p>
+    </div>
+    
+
+<script>
+    
+    let price = localStorage.getItem("price");
+    let type = localStorage.getItem("type");
+
+    function save() {
+        let val = document.getElementById("input").value;
+        localStorage.setItem("price", val);
+
+        let val1 = document.getElementsByName("type");
+        for (let i=0; i<val1.length; i++) {
+            if(val1[i].checked){
+            localStorage.setItem("type", val1[i].value);
+            }
+            // else if((val1[i].checked && val1[i+1].checked)||(val1[i].checked && val1[i-1].checked) ){
+            //     localStorage.setItem("type", null);
+            // }
+        }
+
+        // val1.forEach((ele) => {
+        //     if(ele.checked){
+        //     localStorage.setItem("type", ele.value);
+        //     }
+        //     else if(ele.checked){
+        //         localStorage.setItem("type", ele.value);
+        //     }
+        // });
+        
+    }
+    // alert(type);
+
+if (price!=null) {
+    if (type=="Greater-Than") {
+        var myHeaders = new Headers(); // <- This is used for @RequestHeader
+        myHeaders.append("vPrice", price);
+    
+        var requestOptions = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow'
+        };
+
+        fetch("http://localhost:8080/findByPriceMoreThan", requestOptions)
+        .then(response => {
+            return response.json()
+        })
+        .then(result => {
+            console.log(result)
+
+            let count = 1; // let data = []; data = 
+            document.getElementById("page").insertAdjacentHTML("beforeend", `
+            <h2 id="hd4">Price Greater Than : ${price}</h2>
+            `);
+                // data += 
+            result.forEach(val => {
+                document.getElementById("page").insertAdjacentHTML("beforeend", `
+                <div id="details">
+                    <h3>Vehicle : ${count}</h3>
+                    <hr>
+                    <div class="dts">
+                        <div class="dt1">
+                            <ul>
+                                <li>Id <span>: ${val.vId}</span></li>
+                                <li>Name <span>: ${val.vName}</span></li>
+                                <li>Model <span>: ${val.vModel}</span></li>
+                                <li>Color <span>: ${val.vColor}</span></li>
+                                <li>Price <span>: ${val.vPrice}</span></li>
+                            </ul>
+                        </div>
+                        <div class="dt2">
+                            <a href="${val.vImage}"><img src="${val.vImage}" alt="Not Available"></a>
+                        </div>
+                    </div>
+                </div>
+                `
+                );
+                count++;
+            });
+        })
+        .catch(error => console.log('error', error));
+    } else if(type=="Less-Than") {
+        //---------------------findByPriceLessThan--------------------//
+        var myHeaders = new Headers();
+        myHeaders.append("vPrice", price);
+    
+        var requestOptions = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow'
+        };
+
+        fetch("http://localhost:8080/findByPriceLessThan", requestOptions)
+        .then(response => {
+            return response.json()
+        })
+        .then(result => {
+            console.log(result)
+
+            let count = 1;
+            document.getElementById("page").insertAdjacentHTML("beforeend", `
+            <h2 id="hd4">Price Lesser Than : ${price}</h2>
+            `);
+
+            result.forEach(val => {
+                document.getElementById("page").insertAdjacentHTML("beforeend", `
+                <div id="details">
+                    <h3>Vehicle : ${count}</h3>
+                    <hr>
+                    <div class="dts">
+                        <div class="dt1">
+                            <ul>
+                                <li>Id <span>: ${val.vId}</span></li>
+                                <li>Name <span>: ${val.vName}</span></li>
+                                <li>Model <span>: ${val.vModel}</span></li>
+                                <li>Color <span>: ${val.vColor}</span></li>
+                                <li>Price <span>: ${val.vPrice}</span></li>
+                            </ul>
+                        </div>
+                        <div class="dt2">
+                            <a href="${val.vImage}"><img src="${val.vImage}" alt="Not Available"></a>
+                        </div>
+                    </div>
+                </div>
+                `
+                );
+                count++;
+            });
+        })
+        .catch(error => console.log('error', error));
+    }
+    else{
+        alert("Select Any One Option....!!");
+    }
+} else {
+    document.getElementById("hd4").innerText = "Enter Deatails...!!"        
+}
+localStorage.clear();
+    
+</script>
+
+</body>
+</html>

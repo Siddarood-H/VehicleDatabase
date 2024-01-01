@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Vehicle Details</title>
+    <style>
+        /* #page{
+        } */
+        body{
+            /* background-color: rgb(112, 111, 111); */
+            background-image: url("./CarHomePage.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: left;
+        }
+        .main{
+            /* background-color: rgb(145, 193, 241); */
+            width: 80vw;
+            margin: 0px auto;
+            padding-top: 15px;
+            border-radius: 10px;
+        }
+        h1{
+            color: white;
+            padding-top: 5px;
+            margin: 0px;
+            font-family: sans-serif;
+        }
+        h3{
+            padding-top: 5px;
+            margin: 10px 15px;
+        }
+        #btn1{
+            height: 30px;
+            border: 1.3px solid white;
+            border-radius: 5px;
+            color: white;
+            background-color: rgb(170, 62, 62);
+            margin: 0px 20px;
+        }
+        #btn1:hover{
+            color: red;
+            border: 1.3px solid red;
+            background-color: white;
+            transition: 1s;
+        }
+        #btn2{
+            height: 30px;
+            width: 70px;
+            padding: 5px;
+            font-size: medium;
+            color: white;
+            background-color: rgb(31, 31, 91);
+            border: 1.3px solid white;
+            border-radius: 5px;
+            margin: 0px 20px;
+        }
+        #btn2:hover{
+            color: blue;
+            border: 1.3px solid red;
+            background-color: white;
+            transition: 1s;
+        }
+        .nav{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            /* background-color: rgb(43, 19, 64); */
+            background-color: rgba(117, 117, 117, 0.511);
+            height: 77px;
+            border-radius: 8px;
+        }
+        .nav-bar{
+            position: fixed;
+            top: 0px;
+            height: 69px;
+            width: 80.05vw;
+            margin: 0px 0px;
+            /* background-color: gray; */
+        }
+        p{
+            text-align: center;
+            color: white;
+            /* background-color: rgb(66, 58, 58); */
+            background-color: rgba(117, 117, 117, 0.511);
+            height: 65px;
+            margin: 0px;
+            padding: 20px;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        #details {
+            height: 210px;
+            width: 410px;
+            /* width: 280px; */
+            margin: 5px 30px;
+            margin-left: 40px;
+            border-radius: 8px;
+            /* background-color: rgb(251, 154, 137); */
+            background-color: rgb(255, 255, 255);
+            display: inline-block;
+        }
+        #details li {
+            margin: 4px;
+        }
+        #details span {
+            color: blue;
+        }
+        .dts{
+            display: flex;
+            justify-content: space-between;
+            /* background-color: brown; */
+        }
+        .dt2 img{
+            height: 138px;
+            width: 230px;
+            margin: 0px;
+            margin-right: 10px;
+            border-radius: 5px;
+            /* background-color: aqua; */
+        }
+        
+    </style>
+</head>
+<body >
+    
+    <div class="main">
+        <div id="page">
+            <div class="nav-bar">
+                <div class="nav">
+                    <form action="./MainVehicle.html">
+                        <button id="btn1">Go Back</button>
+                    </form>
+                    <h1 style="text-align: center;">All Vehicle Details</h1> 
+                    <form action="./SortVehicle.html">
+                        
+                        <button id="btn2">Sort</button>
+                    </form>
+                </div>
+            </div> <br> <br> <br>
+            <hr> <br>
+            
+    
+        </div>
+        <p>Vehicle DataBase <br> This website is designed with Kotresh <br>
+            © 2023 - 2023 kotresh.com, Inc</p>
+    </div>
+
+<!-- <img src="" alt=""> -->
+<script >
+    
+    var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+    };
+    
+    fetch("http://localhost:8080/findAll", requestOptions) // 
+    .then(response => {
+        // if (response.ok) {
+        //     console.log("HTTP Request Successful....!!");
+        // } else {
+        //     console.log("HTTP Request Unsuccessful....!!");
+        // }
+        return response.json();
+    })
+    .then(result => {
+        console.log(result)
+
+        let count = 1;
+        // let data = [];
+        // data += 
+        result.forEach(val => {
+            document.getElementById("page").insertAdjacentHTML("beforeend", `
+            <div id="details">
+                <h3>Vehicle : ${count}</h3>
+                <hr>
+                <div class="dts">
+                    <div class="dt1">
+                        <ul>
+                            <li>Id <span>: ${val.vId}</span></li>
+                            <li>Name <span>: ${val.vName}</span></li>
+                            <li>Model <span>: ${val.vModel}</span></li>
+                            <li>Color <span>: ${val.vColor}</span></li>
+                            <li>Price <span>: ${val.vPrice}</span></li>
+                        </ul>
+                    </div>
+                    <div class="dt2">
+                        <a href="${val.vImage}"><img src="${val.vImage}" alt="Not Available"></a>
+                    </div>
+
+                </div>
+
+            </div>
+            `
+            );
+            count++;
+        });
+
+    })
+    .catch(error => console.log('error', error));
+    
+</script>
+
+</body>
+</html>

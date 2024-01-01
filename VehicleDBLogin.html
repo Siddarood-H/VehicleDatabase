@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="icon" href="https://www.pngjoy.com/pngm/263/5050633_admin-admin-login-image-png-png-download.png">
+</head>
+<style>
+    .page{
+        height: 300px;
+        width: 400px;
+        margin: 60px auto;
+        border: solid 1.5px gray;
+        border-radius: 10px;
+        box-shadow: 0px 0px 8px rgb(236, 46, 236);
+    }
+    h1{
+        text-align: center;
+        color: rgb(179, 6, 179);
+        /* color: blue; */
+    }
+    input{
+        /* position: relative;
+        left: 110px; */
+        margin: 10px 107px;
+        padding: 10px;
+        border: solid 1.5px coral;
+        border-radius: 5px;
+        outline: none;
+    }
+    #bt1{
+        height: 35px;
+        width: 80px;
+        background-color: green;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        margin: 10px 160px;
+        box-shadow: 0px 0px 8px ;
+    }
+    #bt1:hover{
+        background-color: white;
+        color: green;
+        transition: 1s;
+        border: solid 1.3px green;
+    }
+    input::placeholder{
+        color: rgb(56, 120, 239);
+        text-align: center;
+    }
+    a{
+        margin: 10px;
+        padding: 8px;
+        border-radius: 5px;
+        text-decoration: none;
+        background-color: rgb(0, 255, 170);
+        box-shadow: 0px 0px 5px ;
+    }
+    a:hover{
+        transition: 1s;
+        color: blue;
+        background-color: white;
+        border: 1.2px solid blue;
+    }
+    
+</style>
+<body>
+    <div class="page">
+        <h1>Login Page</h1> <hr>
+        <!-- onsubmit="return redirect()" -->
+        <form action="" id="form">
+            <input type="text" id="data" name="data" placeholder="AdminName/Email"> <br>
+            <input type="text" id="password" name="password" placeholder="Password"> <br>
+            <button id="bt1" onclick="validate()">Log In</button>
+            <a href="./HomeVehicle.html">HomePage</a>
+            <!-- type="submit" -->
+        </form>
+
+        <!-- <div id="hd4"></div> <br> -->
+    </div>
+    
+
+    <script>
+
+        let data = localStorage.getItem("data");
+        let password = localStorage.getItem("password");
+
+        function validate() {
+            let val = document.getElementById("data").value;
+            let val2 = document.getElementById("password").value;
+
+            localStorage.setItem("data", val);
+            localStorage.setItem("password", val2);
+        }
+
+        if (data!=null && password!=null && data!='' && password!='' && data!=undefined && password!=undefined) {
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+              "adminName": data,
+              "adminPassword": password
+            });
+            
+            var requestOptions = {
+              method: 'POST',
+              headers: myHeaders,
+              body: raw,
+              redirect: 'follow'
+            };
+             // ?data="+data+"&&password="+password
+        fetch("http://localhost:8080/Login", requestOptions)
+        .then(response => {
+        if (response.ok) {
+            alert("Login SuccessFul....!!");
+            window.location.href = "./MainVehicle.html";
+        } else {
+            alert("Enter Currect UserName & Password...!!")
+        }
+        return response.json();
+        })
+        .then(result => {
+            console.log(result);
+
+            // redirect();
+            // function redirect(){
+            //     if ((result.adminName==data && result.adminPassword==password) || 
+            //     (result.adminEmail==data && result.adminPassword==password)) {
+            //     alert("Login Successful...!!");
+            //     window.location.href = "./MainVehicle.html";
+            //     } else {
+            //         alert("Enter Currect UserName & Password..!!")
+            //     }
+            // }
+    
+        })
+        .catch(error => console.log('error', error));
+    
+    }else if((data=='' && password=='') ){  // || (data==undefined && password==undefined)
+        console.log("Enter Deatails...!!");
+        alert("Enter Details....!!");
+
+    }
+    localStorage.clear();
+
+    </script>
+
+</body>
+</html>
